@@ -2,19 +2,22 @@ import { useEffect } from 'react'
 import { Container } from './styles'
 import { FinderInput } from '../components/FinderInput'
 
+import { api } from '../service/api'
+
 export function Home() {
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await fetch('https://api.spotify.com/v1/search/q=tyga;type=artist')
+  // remaster % 20track: Doxy % 20artist: Miles % 20Davis
 
-  //     return response.json()
-  //   }
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = (await api.get('/?query=franksinatra&type=artist'))
+      return response.data
+    }
 
+    console.log(api.defaults.headers.token)
 
-  //   fetchData()
-  // }, [])
-
+    fetchData()
+  }, [])
 
   return (
     <Container>
