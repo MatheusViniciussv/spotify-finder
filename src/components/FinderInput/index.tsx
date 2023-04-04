@@ -1,7 +1,11 @@
 import { Input } from "./styles";
 
-export function FinderInput() {
+interface InputProps {
+  handleAlbumName: (name: string) => void
+}
+
+export function FinderInput({ handleAlbumName }: InputProps) {
   return (
-    <Input placeholder='find your album' />
+    <Input placeholder='find your album' onChange={(e) => handleAlbumName(e.currentTarget.value)} />
   )
 }

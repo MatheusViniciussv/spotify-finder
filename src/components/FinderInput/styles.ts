@@ -9,6 +9,8 @@ export const Input = styled.input`
   border: 3px solid transparent;
   outline: none;
 
+  background: #e1e1e6;
+
   color: #323238;
 
   &::placeholder {

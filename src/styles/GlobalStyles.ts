@@ -8,7 +8,7 @@ export const GlobalStyles = createGlobalStyle`
    }
 
    body {
-    background: linear-gradient(270deg, #1db954, #191414); ;
+    background: linear-gradient(270deg, #1db954, #191414); 
     color: white;
     -webkit-font-smoothing: antialiased
   }

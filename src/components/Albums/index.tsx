@@ -1,12 +1,53 @@
-export function FinderInput() {
+import { useContext } from 'react'
+import { IArtists, IImage } from "../../app/Home/model";
+import { AlbumContext } from "../../contexts/AlbumContext";
+import { Artists, Button, Container, Content, Info } from "./styles";
+
+import { FiArrowDown } from 'react-icons/fi'
+import { Link } from 'react-router-dom';
+
+interface Card {
+  album: {
+    id: string
+    images: IImage[];
+    name: string
+    release_date: string
+    total_tracks: number
+    artists: IArtists[]
+  }
+}
+
+export function AlbumCard({ album }: Card) {
+  const { id, total_tracks, images, name, release_date, artists } = album
+
+  const { getAlbumId } = useContext(AlbumContext)
+
   return (
-    <div>
-      <span>img</span>
+    <Container>
+      <Content>
+        <img src={images[2].url} />
 
-      <h3>album name</h3>
+        <Info>
+          <div>
+            <h3>{name}</h3>
+            <Artists>
+              {artists.map((artist) => {
+                return (
+                  <a key={artist.id} href={artist.uri}><span>{artist.name}</span></a>
+                )
+              })}
+            </Artists>
+            <span>tracks: {total_tracks}</span>
+          </div>
 
-      <span>description</span>
-      <span>popularity</span>
-    </div>
+          <div>
+            <span>{new Date(release_date).toLocaleDateString()}</span>
+            <Button>
+              <Link to='tracks' onClick={() => getAlbumId(id)} >View</Link>
+            </Button>
+          </div>
+        </Info>
+      </Content>
+    </Container>
   )
 }
