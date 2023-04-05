@@ -6,7 +6,7 @@ export function Router() {
   return (
     <Routes>
       <Route element={<Home />} path='/' />
-      <Route element={<AlbumTrack />} path='/tracks' />
+      <Route element={<AlbumTrack />} path='/tracks/:id' />
     </Routes>
   )
 }

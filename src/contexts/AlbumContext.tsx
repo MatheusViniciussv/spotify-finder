@@ -1,5 +1,5 @@
 import { createContext, useState, ReactNode } from 'react'
-import { IArtists, IImage } from '../app/Home/model';
+import { IArtists, IImage, ItemsDTO } from '../app/Home/model';
 
 interface IAlbumTracks {
   id: string
@@ -7,14 +7,26 @@ interface IAlbumTracks {
   name: string
   duration_ms: number;
   artists: IArtists[]
-  uri: string
+  uri: string;
+  preview_url: string;
+  external_urls: {
+    spotify: string
+  }
+}
+
+interface IAlbum {
+  id: string;
+  name: string;
+  images: IImage[];
 }
 
 interface AlbumContextType {
+  search: string;
   albumTracks: IAlbumTracks[];
-  albumId: string
-  getAlbumId: (id: string) => void
+  album: IAlbum
+  getAlbum: (album: IAlbum) => void
   handleAlbumTracks: (tracks: IAlbumTracks[]) => void
+  handleSearch: (searchAlbum: string) => void
 }
 
 export const AlbumContext = createContext({} as AlbumContextType)
@@ -26,20 +38,25 @@ interface AlbumContextProviderProps {
 export function AlbumContexstProvider({
   children,
 }: AlbumContextProviderProps) {
-  const [albumId, setAlbumId] = useState<string>('');
+  const [album, setAlbum] = useState<IAlbum>({} as IAlbum);
   const [albumTracks, setAlbumTracks] = useState<IAlbumTracks[]>([])
+  const [search, setSearch] = useState<string>('')
 
-  function getAlbumId(id: string) {
-    setAlbumId(id)
+  function getAlbum(album: IAlbum) {
+    setAlbum(album)
   }
 
   function handleAlbumTracks(tracks: IAlbumTracks[]) {
     setAlbumTracks(tracks)
   }
 
+  function handleSearch(searchAlbum: string) {
+    setSearch(searchAlbum)
+  }
+
   return (
     <AlbumContext.Provider
-      value={{ albumId, albumTracks, getAlbumId, handleAlbumTracks }}
+      value={{ album, albumTracks, getAlbum, handleAlbumTracks, search, handleSearch }}
     >
       {children}
     </AlbumContext.Provider>

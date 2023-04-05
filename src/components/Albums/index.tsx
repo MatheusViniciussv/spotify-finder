@@ -3,7 +3,6 @@ import { IArtists, IImage } from "../../app/Home/model";
 import { AlbumContext } from "../../contexts/AlbumContext";
 import { Artists, Button, Container, Content, Info } from "./styles";
 
-import { FiArrowDown } from 'react-icons/fi'
 import { Link } from 'react-router-dom';
 
 interface Card {
@@ -20,7 +19,7 @@ interface Card {
 export function AlbumCard({ album }: Card) {
   const { id, total_tracks, images, name, release_date, artists } = album
 
-  const { getAlbumId } = useContext(AlbumContext)
+  const { getAlbum } = useContext(AlbumContext)
 
   return (
     <Container>
@@ -43,7 +42,7 @@ export function AlbumCard({ album }: Card) {
           <div>
             <span>{new Date(release_date).toLocaleDateString()}</span>
             <Button>
-              <Link to='tracks' onClick={() => getAlbumId(id)} >View</Link>
+              <Link to={`/tracks/${album.id}`} onClick={() => getAlbum(album)} >View</Link>
             </Button>
           </div>
         </Info>

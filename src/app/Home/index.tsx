@@ -1,38 +1,38 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { CardContainer, Container } from './styles'
 import { FinderInput } from '../../components/FinderInput'
 
 import { api } from '../../service/api'
 import { IAlbum } from './model';
 import { AlbumCard } from '../../components/Albums';
+import { AlbumContext } from '../../contexts/AlbumContext';
 
 export function Home() {
 
-  const [finderAlbum, setFinderAlbum] = useState<string>('');
+  const { search } = useContext(AlbumContext)
+
   const [album, setAlbum] = useState<IAlbum | undefined>()
 
-  useEffect(() => {
+  const fetchData = async () => {
+    const { data } = await api.get<IAlbum>(`/search?query=${search}&type=album&limit=10`)
+    setAlbum(data)
 
-    if (finderAlbum) {
-      const fetchData = async () => {
-        const { data } = await api.get<IAlbum>(`/search?query=${finderAlbum}&type=album&limit=10`)
-        setAlbum(data)
-
-        return data
-      }
-
-      fetchData()
-    }
-  }, [finderAlbum])
-
-  function findAlbumName(name: string) {
-    setFinderAlbum(name)
+    return data
   }
 
+  useEffect(() => {
+    if (search) {
+      const searchAlbum = setTimeout(() => {
+        fetchData()
+      }, 800)
+
+      return () => clearTimeout(searchAlbum)
+    }
+  }, [search])
 
   return (
     <Container>
-      <FinderInput handleAlbumName={findAlbumName} />
+      <FinderInput />
 
       <CardContainer>
         {album?.albums.items.map((album) => {

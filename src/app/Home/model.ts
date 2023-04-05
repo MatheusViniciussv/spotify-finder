@@ -15,7 +15,7 @@ export interface IArtists {
   uri: string;
 }
 
-interface ItemsDTO {
+export interface ItemsDTO {
   album_type: string;
   total_tracks: 9;
   available_markets: string[];

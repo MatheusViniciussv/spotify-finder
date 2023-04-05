@@ -98,7 +98,3 @@ export const Artists = styled.div`
     font-size: 0.85rem;
   }
 `;
-
-export const Tracks = styled.div `
-
-`;

@@ -1,11 +1,11 @@
+import { AlbumContext } from "../../contexts/AlbumContext";
 import { Input } from "./styles";
+import { useContext } from 'react'
 
-interface InputProps {
-  handleAlbumName: (name: string) => void
-}
+export function FinderInput() {
+  const { search, handleSearch } = useContext(AlbumContext)
 
-export function FinderInput({ handleAlbumName }: InputProps) {
   return (
-    <Input placeholder='find your album' onChange={(e) => handleAlbumName(e.currentTarget.value)} />
+    <Input placeholder='find your album' value={search} onChange={(e) => handleSearch(e.target.value)} />
   )
 }
